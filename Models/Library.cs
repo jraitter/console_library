@@ -11,6 +11,8 @@ namespace console_library.Models
     private List<Book> Books { get; set; }
     public List<Book> CheckedOut { get; set; }
 
+    List<Book> myList = null;
+
 
     //helper functions
     public void AddBook(Book newBook)
@@ -22,6 +24,22 @@ namespace console_library.Models
     {
       //add list of books
       Books.AddRange(newBooks);
+    }
+
+    public void PrintBooks(console_library.Program.Menus menu)
+    {
+      if (menu == 0)
+      {
+        myList = Books;
+      }
+      else
+      {
+        myList = CheckedOut;
+      }
+      for (int i = 0; i < myList.Count; i++)
+      {
+        Console.WriteLine($"{i + 1}. {myList[i].Title} -  {myList[i].Author} \n");
+      }
     }
 
     public void PrintAvailableBooks()

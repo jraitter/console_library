@@ -40,14 +40,28 @@ namespace console_library
           case Menus.CheckoutBook:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Available Books: \n");
-            nampa.PrintAvailableBooks();
-            Console.WriteLine("Select a book number to checkout (q)uit, or (r)eturn a book");
+            nampa.PrintBooks(Menus.CheckoutBook);
+            // nampa.PrintAvailableBooks();
+            Console.WriteLine("Select a book number to checkout (q)uit, (c)reate a book, or (r)eturn a book");
             break;
           case Menus.ReturnBook:
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Checked out books: \n");
-            nampa.PrintCheckedOutBooks();
+            nampa.PrintBooks(Menus.ReturnBook);
+            // nampa.PrintCheckedOutBooks();
             Console.WriteLine("Select a book number to return, (q)uit, or (a)vailable books");
+            break;
+          case Menus.CreateBook:
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("\nEnter Book Title: ");
+            string bookTitle = Console.ReadLine();
+            Console.Write("\nEnter Book Author: ");
+            string bookAuthor = Console.ReadLine();
+            Book newBook = new Book($"{bookTitle}", $"{bookAuthor}");
+            nampa.AddBook(newBook);
+            Console.WriteLine("\nThis book has been added: \n");
+            Console.WriteLine($"{bookTitle} by {bookAuthor}");
+            Console.WriteLine("\n(c)reate a book, (q)uit, or (a)vailable books");
             break;
         }
         string selection = Console.ReadLine();
@@ -66,6 +80,10 @@ namespace console_library
         else if (selection.Trim().ToLower() == "a" || selection.Trim().ToLower() == "available")
         {
           activeMenu = Menus.CheckoutBook;
+        }
+        else if (selection.Trim().ToLower() == "c" || selection.Trim().ToLower() == "create")
+        {
+          activeMenu = Menus.CreateBook;
         }
         else
         {
@@ -87,7 +105,8 @@ namespace console_library
     public enum Menus
     {
       CheckoutBook,
-      ReturnBook
+      ReturnBook,
+      CreateBook
     }//end of enum Menus
 
   }//end of class Program
